@@ -1,0 +1,30 @@
+\documentclass{article}
+
+\usepackage{anysize}
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setmonofont{Inconsolata}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\usepackage{dafny}
+
+\hypersetup{
+pdfinfo={
+	Title={Algoritmos con Dafny},
+	Subject={TFG},
+	Creator={Maquetador de Vaed}
+}
+}
+
+\lstset{
+	language=dafny,
+	keywordstyle=\color{brown}\bfseries,
+	commentstyle=\color{blue},
+	stringstyle=\ttfamily,
+	numbers=left,
+	stepnumber=10,
+	numberstyle=\tiny\color{gray},
+	firstnumber=1
+}

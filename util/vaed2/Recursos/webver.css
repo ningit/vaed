@@ -1,0 +1,17 @@
+body {
+	background: olive;
+}
+
+.prog {
+	width: 99%;
+	height: 5cm;
+	border: 3px solid #e18728;
+	padding: 5px;
+	color: white;
+	background-color: #1d1f21;
+	font-family: Tahoma, sans-serif;
+}
+
+.res {
+	font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+}

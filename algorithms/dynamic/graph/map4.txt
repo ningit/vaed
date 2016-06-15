@@ -1,0 +1,7 @@
+: Proper digraph with negative edges and
+: unreachable vertices.
+:
+A	B	-1
+A	C	1	-
+B	C	2	-
+B	D	-2

@@ -1,0 +1,7 @@
+: Example with negative cycles.
+: It doesn't meet the precondition but can be used to
+: test it.
+:
+A	B	2	-
+A	C	3	-
+B	C	-6	-

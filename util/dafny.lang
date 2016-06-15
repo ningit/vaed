@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	GtkSourceView language specification for Dafny
+	(http://research.microsoft.com/dafny)
+
+	Reserved words (which includes types) are taken from
+	Microsoft.Dafny.Scanner.CheckLiteral() in file Scanner.cs
+
+	Numbers and characters format is based on "Types in Dafny" (KRML 243)
+	(http://research.microsoft.com/en-us/um/people/leino/papers/krml243.html)
+-->
+
+<language id="dafny" _name="Dafny" version="2.0" _section="Sources">
+	<metadata>
+		<property name="mimetypes">text/x-dafny</property>
+		<property name="globs">*.dfy</property>
+		<property name="line-comment-start">//</property>
+		<property name="block-comment-start">/*</property>
+		<property name="block-comment-end">*/</property>
+	</metadata>
+
+	<styles>
+		<style id="comment" _name="Comment" map-to="def:comment"/>
+		<style id="string" _name="String" map-to="def:string"/>
+		<style id="char" _name="Character" map-to="def:character"/>
+		<style id="keyword" _name="Keyword" map-to="def:keyword"/>
+		<style id="type" _name="Data Type" map-to="def:type"/>
+		<style id="constant" _name="Constant" map-to="def:constant"/>
+		<style id="identifier" _name="Identifier" map-to="def:identifier"/>
+		<style id="number" _name="Number" map-to="def:number"/>
+	</styles>
+
+	<definitions>
+		<context id="function" style-ref="keyword">
+			<keyword>method</keyword>
+			<keyword>comethod</keyword>
+			<keyword>lemma</keyword>
+			<keyword>colemma</keyword>
+			<keyword>function</keyword>
+			<keyword>predicate</keyword>
+			<keyword>copredicate</keyword>
+			<keyword>constructor</keyword>
+		</context>
+
+		<context id="type" style-ref="keyword">
+			<keyword>datatype</keyword>
+			<keyword>codatatype</keyword>
+			<keyword>class</keyword>
+			<keyword>trait</keyword>
+			<keyword>newtype</keyword>
+			<keyword>type</keyword>
+			<keyword>iterator</keyword>
+		</context>
+
+		<context id="keywords" style-ref="keyword">
+			<keyword>assume</keyword>
+			<keyword>calc</keyword>
+			<keyword>case</keyword>
+			<keyword>then</keyword>
+			<keyword>else</keyword>
+			<keyword>decreases</keyword>
+			<keyword>invariant</keyword>
+			<keyword>inductive</keyword>
+			<keyword>modifies</keyword>
+			<keyword>reads</keyword>
+			<keyword>requires</keyword>
+			<keyword>include</keyword>
+			<keyword>abstract</keyword>
+			<keyword>module</keyword>
+			<keyword>exclusively</keyword>
+			<keyword>refines</keyword>
+			<keyword>import</keyword>
+			<keyword>opened</keyword>
+			<keyword>as</keyword>
+			<keyword>default</keyword>
+			<keyword>extends</keyword>
+			<keyword>ghost</keyword>
+			<keyword>static</keyword>
+			<keyword>protected</keyword>
+			<keyword>var</keyword>
+			<keyword>yields</keyword>
+			<keyword>returns</keyword>
+			<keyword>free</keyword>
+			<keyword>ensures</keyword>
+			<keyword>yield</keyword>
+			<keyword>label</keyword>
+			<keyword>break</keyword>
+			<keyword>where</keyword>
+			<keyword>return</keyword>
+			<keyword>new</keyword>
+			<keyword>if</keyword>
+			<keyword>while</keyword>
+			<keyword>match</keyword>
+			<keyword>assert</keyword>
+			<keyword>print</keyword>
+			<keyword>forall</keyword>
+			<keyword>parallel</keyword>
+			<keyword>modify</keyword>
+			<keyword>exists</keyword>
+			<keyword>in</keyword>
+			<keyword>fresh</keyword>
+			<keyword>old</keyword>
+		</context>
+
+		<context id="types" style-ref="type">
+			<keyword>bool</keyword>
+			<keyword>char</keyword>
+			<keyword>int</keyword>
+			<keyword>nat</keyword>
+			<keyword>real</keyword>
+			<keyword>object</keyword>
+			<keyword>string</keyword>
+			<keyword>set</keyword>
+			<keyword>iset</keyword>
+			<keyword>multiset</keyword>
+			<keyword>seq</keyword>
+			<keyword>map</keyword>
+			<keyword>imap</keyword>
+		</context>
+
+		<context id="this" style-ref="identifier">
+			<keyword>this</keyword>
+		</context>
+
+		<context id="null" style-ref="identifier">
+			<keyword>null</keyword>
+		</context>
+
+		<context id="constants" style-ref="constant">
+			<keyword>true</keyword>
+			<keyword>false</keyword>
+		</context>
+
+		<context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
+			<start>//</start>
+			<include>
+				<context ref="def:in-line-comment"/>
+			</include>
+		</context>
+
+		<context id="block-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
+			<start>/\*</start>
+			<end>\*/</end>
+			<include>
+				<context ref="def:in-comment"/>
+			</include>
+		</context>
+
+
+		<define-regex id="hex_digit" extended="true">
+			[0-9a-fA-F]
+		</define-regex>
+
+		<define-regex id="float_suffix" extended="true">
+			(\.[0-9][0-9_]*)?
+		</define-regex>
+
+		<context id="number" style-ref="number">
+			<match extended="true">
+				((?&lt;=\.\.)|(?&lt;![\w\.]))
+				(
+				[1-9][0-9_]*\%{float_suffix}|
+				0[0-9_]*\%{float_suffix}|
+				0x(\%{hex_digit}|_)+
+				)
+				((?![\w\.].)|(?=\.\.))
+			</match>
+		</context>
+
+		<define-regex id="ident" extended="true">
+			([^[:cntrl:][:space:][:punct:][:digit:]]|_)([^[:cntrl:][:punct:][:space:]]|_)*
+		</define-regex>
+
+		<define-regex id="common_escape" extended="true">
+			'|"|
+			\\|n|r|t|0|
+			u\%{hex_digit}{4}|
+		</define-regex>
+
+		<context id="string_escape" style-ref="def:special-char">
+			<match>\\\%{common_escape}</match>
+		</context>
+
+		<context id="string" style-ref="string" class="string" class-disabled="no-spell-check">
+			<start>"</start>
+			<end>"</end>
+			<include>
+				<context ref="string_escape"/>
+				<context ref="def:line-continue"/>
+			</include>
+		</context>
+
+		<context id="char" style-ref="char">
+			<match extended="true">'([^\\']|\\\%{common_escape})'</match>
+		</context>
+
+		<context id="dafny" class="no-spell-check">
+			<include>
+				<context ref="function"/>
+				<context ref="type"/>
+				<context ref="keywords"/>
+				<context ref="types"/>
+				<context ref="this"/>
+				<context ref="null"/>
+				<context ref="constants"/>
+				<context ref="line-comment"/>
+				<context ref="block-comment"/>
+				<context ref="number"/>
+				<context ref="string"/>
+				<context ref="char"/>
+			</include>
+		</context>
+	</definitions>
+
+</language>

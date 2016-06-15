@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{09485FE9-2159-4228-9E0B-C7885A41BFC2}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>vaed</RootNamespace>
+    <AssemblyName>vaed</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tarea.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Dafny.cs" />
+    <Compile Include="Explorador.cs" />
+    <Compile Include="ServidorWeb.cs" />
+    <Compile Include="Tareas\Revisar.cs" />
+    <Compile Include="Tareas\Maquetar.cs">
+      <LogicalName>maquetar.tex</LogicalName>
+    </Compile>
+    <Compile Include="Tareas\Servir.cs" />
+    <Compile Include="Cache.cs" />
+    <Compile Include="Parametros.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Tareas\" />
+    <Folder Include="ejercicios\" />
+    <Folder Include="Recursos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Recursos\interfaz.htm">
+      <LogicalName>vaed.aux.interfaz.htm</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recursos\dafny.sty">
+      <LogicalName>vaed.aux.dafny.sty</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recursos\webver.css">
+      <LogicalName>vaed.aux.webver.css</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recursos\webver.js">
+      <LogicalName>vaed.aux.webver.js</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recursos\404.htm">
+      <LogicalName>vaed.aux.404.htm</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recursos\maquetar.tex">
+      <LogicalName>vaed.aux.maquetar.tex</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+: The minus sign creates a two-way edge
+:
+A	B	1	-
+A	C	8	-
+B	C	3	-
+B	D	10	-
+C	D	1	-
