@@ -8,9 +8,8 @@ class Stack
 {
 	// Creates the empty stack
 	constructor()
-		modifies this
 		ensures Valid()
-		ensures fresh(Repr - {this})
+		ensures fresh(Repr)
 		ensures Elements() == []
 
 	// Gets the top element of the stack without changing it

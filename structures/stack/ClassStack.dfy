@@ -18,7 +18,7 @@ class Stack
 
 	method Pop...
 	{
-		// Needed in order to prove that the chaine from the
+		// Needed in order to prove that the chain from the
 		// new head is still valid
 		assert Repr - {head} - {this} == Repr - {this} - {head};
 
@@ -29,10 +29,7 @@ class Stack
 
 	method Push...
 	{
-		var newHead := new Node;
-
-		newHead.value := e;
-		newHead.next  := head;
+		var newHead := new Node(e, head);
 
 		newHead.tailLength := if head == null then 0 else
 			1 + head.tailLength;
@@ -70,7 +67,7 @@ class Stack
 	{
 		head := null;
 
-		Repr := {this};
+		Repr := {};
 	}
 
 	// Data representation
@@ -81,6 +78,14 @@ class Stack
 
 class Node
 {
+  constructor(v : T, nx  : Node)
+		ensures value == v
+		ensures next == nx
+	{
+		value := v;
+		next := nx;
+	}
+
 	// Node value
 	var value : T;
 
@@ -107,7 +112,6 @@ predicate ValidChain(node : Node, nodes : set<object>)
 	requires node == null || node in nodes
 {
 	node == null ||
-
 	(node.next != null ==> node.next in nodes && ValidLink(node) && ValidChain(node.next, nodes - {node}))
 }
 

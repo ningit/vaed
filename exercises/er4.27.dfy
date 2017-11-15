@@ -83,8 +83,6 @@ lemma AvanceSumas13(s : seq<int>)
 		// Y por otro se intenta simplificar np
 		var nps := set i : nat | i < |s|-1 && s[i] == 13 - s[|s|-1];
 
-		assert np == set z : nat | z in nps :: (z, |s|-1);
-
 		LemaProdS(nps, |s|-1, np);
 	}
 }

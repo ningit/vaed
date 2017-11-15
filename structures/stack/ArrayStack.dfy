@@ -7,6 +7,9 @@ include "Stack.dfy"
 
 abstract module ArrayStack refines Stack
 {
+	// Default value for T
+	// (it is needed to initialize the array)
+	function method DefaultValue() : T
 
 class {:autocontracts} Stack
 {
@@ -32,24 +35,18 @@ class {:autocontracts} Stack
 		ensures nelems < elems.Length
 		ensures Elements() == old(Elements())
 	{
-		var tmp := new T[elems.Length * 2];
+		var tmp := new T[elems.Length * 2](_ => DefaultValue());
 
 		assert elems.Length < tmp.Length;
 
-		var i := 0;
-
-		assert elems != null;
-
 		forall i | 0 <= i < nelems
-			//invariant tmp[..i] == elems[..i]
 		{
 			tmp[i] := elems[i];
 		}
 
 		assert tmp[..nelems] == elems[..nelems];
 
-		Repr := Repr - {elems};
-
+		Repr := {tmp};
 		elems := tmp;
 	}
 
@@ -59,6 +56,10 @@ class {:autocontracts} Stack
 		if nelems == elems.Length
 		{
 			Expand();
+
+			// Why do we need to set Repr twice to make
+			// «fresh(Repr - old(Repr))» hold?
+			Repr := {elems};
 		}
 
 		ReverseCorollaryCons(elems[..nelems], e);
@@ -100,8 +101,10 @@ class {:autocontracts} Stack
 
 	constructor()
 	{
-		elems	:= new T[16];
+		elems	:= new T[16](_ => DefaultValue());
 		nelems	:= 0;
+
+		Repr := {elems};
 	}
 
 	// Data representation

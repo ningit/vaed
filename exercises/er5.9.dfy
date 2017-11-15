@@ -13,16 +13,24 @@ lemma EvalMayores(p : seq<int>, v : int)
 {
 	// Demostración recursiva añadiendo elementos por la izquierda
 
-	if |p| == 1 {
+	if |p| <= 1 {
 		// Caso base
 	}
 	else {
-		EvalMayores(p[1..], v);
-
-		assert p[1..][..|p|-2] == p[1..|p|-1];
-
-		assert Eval(p[1..], v) == Eval(p[1..|p|-1], v) 
-			+ p[|p|-1] * Pot(v, |p|-2);
+		calc
+		{
+			Eval(p, v);
+			// definición
+			p[0] + v * Eval(p[1..], v);
+			// hipósis de inducción
+			{ EvalMayores(p[1..], v); }
+			p[0] + v * Eval(p[1..][..|p|-2], v) + p[|p|-1] * Pot(v, |p|-1);
+			// asertos necesarios sobre secuencias
+			{ assert p[1..][..|p|-2] == p[1..|p|-1]; assert p[1..|p|-1] == p[..|p|-1][1..]; }
+			p[0] + v * Eval(p[..|p|-1][1..], v) + p[|p|-1] * Pot(v, |p|-1);
+			// definición
+			Eval(p[..|p|-1], v) + p[|p|-1] * Pot(v, |p|-1);
+		}
 	}
 }
 

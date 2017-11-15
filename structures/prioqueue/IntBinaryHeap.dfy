@@ -5,15 +5,13 @@ class {:autocontracts} BinaryHeap
 {
 	function Elements() : multiset<int>
 		reads this, Repr
-
-		requires Valid()
 	{
 		multiset(elems[..nelems])
 	}
 
 	// Number of elements in the heap
 	function Size() : nat
-		reads this
+		reads Repr
 	{
 		nelems
 	}
@@ -205,16 +203,16 @@ class {:autocontracts} BinaryHeap
 		}
 	}
 
-	// Index of the parent node
-	function Parent(n : nat) : nat
-		requires n != 0
-	{
-		(n - 1) / 2
-	}
-
 	// Elements
 	var elems	: array<int>;
 
 	// Elements count
 	var nelems	: nat;
+}
+
+// Index of the parent node
+function Parent(n : nat) : nat
+	requires n != 0
+{
+		(n - 1) / 2
 }

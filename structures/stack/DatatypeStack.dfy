@@ -46,6 +46,7 @@ class {:autocontracts} Stack
 	constructor ()
 	{
 		elems := EmptyStack;
+		Repr := {this};
 	}
 
 	// Data representation
